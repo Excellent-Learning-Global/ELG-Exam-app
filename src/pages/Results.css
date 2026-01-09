@@ -1,0 +1,12 @@
+.testheader{
+  font-size: 30px;
+}
+
+.resultcard {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background: #fafafa;   
+  padding-left: 30px;
+}

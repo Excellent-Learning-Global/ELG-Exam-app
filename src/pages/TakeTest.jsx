@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Button from '../components/Button.jsx';
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -77,13 +77,13 @@ function TakeTest() {
       ))}
 
       <div style={{ marginTop: "20px" }}>
-        <button onClick={handlePrev} disabled={currentIndex === 0}>
+        <Button  type='outline' onClick={handlePrev} disabled={currentIndex === 0} >
           Previous
-        </button>
+        </Button>
         {currentIndex < questions.length - 1 ? (
-          <button onClick={handleNext}>Next</button>
+          <Button type='outline' onClick={handleNext}>Next</Button>
         ) : (
-          <button onClick={handleSubmit}>Submit Test</button>
+          <Button onClick={handleSubmit}>Submit Test</Button>
         )}
       </div>
     </div>
