@@ -1,8 +1,10 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 import './AdminDashboard.css';
 import Button from '../../components/Button.jsx';
 
 function AdminDashboard() {
+  const navigate = useNavigate();
   const stats = {
     totalStudents: 200,
     totalTests: 15,
@@ -33,7 +35,7 @@ function AdminDashboard() {
 
       {/* Actions */}
       <div className='admin-actions' >
-        <Button >Create New Test</Button>
+        <Button onClick={() => navigate('/admin/create-test')} >Create New Test</Button>
         <Button type='secondary'>View Results</Button>
         <Button>Manage Students</Button>
       </div>
