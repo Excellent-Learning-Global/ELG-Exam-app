@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { mockTests } from './data/Test.js';
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import TakeTest from "./pages/TakeTest";
@@ -9,18 +10,37 @@ import CreateTest from "./pages/admin/CreateTest";
 
 function App() {
   const [count, setCount] = useState(0)
+  const [tests, setTests] = useState(mockTests);
+
+  const addTest = (newTest) => {
+    setTests(prev => [...prev, newTest]);
+  };
 
   return (
+    <>
+
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/test/:id" element={<TakeTest />} />
         <Route path="/results/:id" element={<Results />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/create-test" element={<CreateTest />} />
+        
+        <Route
+          path="/admin"
+          element={<AdminDashboard tests={tests} />}
+        />
+
+        <Route
+          path="/admin/create-test"
+          element={<CreateTest addTest={addTest} />}
+        />
       </Routes>
     </BrowserRouter>
+
+    
+    </>
+
   );
 }
 

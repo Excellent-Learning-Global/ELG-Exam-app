@@ -2,23 +2,9 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import './Dashboard.css';
 import Button from '../components/Button.jsx';
+import { mockTests } from '../data/Test.js';
 
-const tests = [
-  {
-    id: 1,
-    title: "Weekly Test 1",
-    duration: "30 mins",
-    totalQuestions: 20,
-    status: "Not Started"
-  },
-  {
-    id: 2,
-    title: "Monthly Exam",
-    duration: "1 hour",
-    totalQuestions: 40,
-    status: "Completed"
-  }
-];
+
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -28,7 +14,7 @@ function Dashboard() {
       <h1>Student Dashboard</h1>
       <h3 className='title'>Available Tests</h3>
       <div className='container'>
-        {tests.map(test => (
+        {mockTests.map(test => (
           <div key={test.id} className='questionsLayout' >
             <h3 className='testtitle'>{test.title}</h3>
             <p className='duration'>Duration: {test.duration}</p>
