@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './AdminDashboard.css';
 import Button from '../../components/Button.jsx';
 
-function AdminDashboard({ tests }) {
+function AdminDashboard({ tests , deleteTest}) {
   const navigate = useNavigate();
 
   const stats = {
@@ -56,12 +56,19 @@ function AdminDashboard({ tests }) {
             <p>Status: {test.status}</p>
 
             <div className='test-actions'>
-              <Button type='secondary' onClick={() => console.log("Edit", test.id)}>
+              <Button type='secondary' onClick={() => navigate('/admin/create-test', { state: { test } })}>
                 Edit
               </Button>
-              <Button onClick={() => console.log("Delete", test.id)}>
-                Delete
-              </Button>
+
+              <Button type='danger' 
+                 onClick={() => {
+                    if (window.confirm(`Are you sure you want to delete "${test.title}"?`)) {
+                      deleteTest(test.id);
+                    }
+                   }} 
+              
+              >Delete</Button>
+
             </div>
           </div>
         ))}

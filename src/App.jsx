@@ -16,6 +16,15 @@ function App() {
     setTests(prev => [...prev, newTest]);
   };
 
+  const deleteTest = (id) => {
+    setTests(prev => prev.filter(test => test.id !== id));
+  };
+  const editTest = (updatedTest) => {
+    setTests(prev => prev.map(test =>
+      test.id === updatedTest.id ? updatedTest : test
+    ));
+  };
+
   return (
     <>
 
@@ -28,12 +37,12 @@ function App() {
         
         <Route
           path="/admin"
-          element={<AdminDashboard tests={tests} />}
+          element={<AdminDashboard tests={tests} deleteTest={deleteTest}  />}
         />
 
         <Route
           path="/admin/create-test"
-          element={<CreateTest addTest={addTest} />}
+          element={<CreateTest addTest={addTest} editTest={editTest}  />}
         />
       </Routes>
     </BrowserRouter>
