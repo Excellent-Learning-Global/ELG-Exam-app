@@ -29,6 +29,7 @@ function CreateTest({ addTest, editTest }) {
     if (editingTest) {
       editTest(newTest); // update existing test
     } else {
+      console.log("Adding new test:", newTest);
       addTest(newTest);  // add new test
     }
 
@@ -36,7 +37,8 @@ function CreateTest({ addTest, editTest }) {
     setTitle("");
     setDuration("");
     setTotalQuestions("");
-    navigate("/admin");
+    
+    navigate("/dashboard");
   };
 
   return (

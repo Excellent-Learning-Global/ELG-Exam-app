@@ -2,30 +2,33 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import './Dashboard.css';
 import Button from '../components/Button.jsx';
-import { mockTests } from '../data/Test.js';
 
 
 
-function Dashboard() {
+
+function Dashboard({ tests }) {
   const navigate = useNavigate();
-
+  console.log("Student dashboard tests:", tests);
   return (
-    <div style={{padding:"20px"}}>
-      <h1>Student Dashboard</h1>
-      <h3 className='title'>Available Tests</h3>
-      <div className='container'>
-        {mockTests.map(test => (
-          <div key={test.id} className='questionsLayout' >
-            <h3 className='testtitle'>{test.title}</h3>
-            <p className='duration'>Duration: {test.duration}</p>
-            <p className='questions'>Questions: {test.totalQuestions} </p>
-            <p className='teststatus'>Status: {test.status}</p>
+    <div className="dashboard-container">
+      <h2 className="dashboard-title">Student Dashboard</h2>
+
+      <div className="test-list">
+        {tests.length === 0 && (
+          <p>No tests available at the moment.</p>
+        )}
+
+        {tests.map(test => (
+          <div key={test.id} className="test-card">
+            <h3>{test.title}</h3>
+
+            <p>Duration: {test.duration}</p>
+            <p>Status: {test.status}</p>
 
             {test.status === "Completed" ? (
-              <>
-                <Button type='secondary' onClick={() => navigate('/results/:id')}>View Result</Button>
-              </>
-              
+              <Button type="secondary">
+                View Result
+              </Button>
             ) : (
               <Button onClick={() => navigate(`/test/${test.id}`)}>
                 Start Test
@@ -34,7 +37,6 @@ function Dashboard() {
           </div>
         ))}
       </div>
-
     </div>
   );
 }

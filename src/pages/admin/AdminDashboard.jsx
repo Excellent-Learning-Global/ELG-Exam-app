@@ -5,6 +5,16 @@ import Button from '../../components/Button.jsx';
 
 function AdminDashboard({ tests , deleteTest}) {
   const navigate = useNavigate();
+  const handleDelete = (id, title) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete "${title}"?`
+    );
+
+    if (confirmDelete) {
+      deleteTest(id);
+    }
+  };
+
 
   const stats = {
     totalStudents: 200,
@@ -60,14 +70,13 @@ function AdminDashboard({ tests , deleteTest}) {
                 Edit
               </Button>
 
-              <Button type='danger' 
-                 onClick={() => {
-                    if (window.confirm(`Are you sure you want to delete "${test.title}"?`)) {
-                      deleteTest(test.id);
-                    }
-                   }} 
-              
-              >Delete</Button>
+              <Button
+                type="danger"
+                onClick={() => handleDelete(test.id, test.title)}
+              >
+                Delete
+              </Button>
+
 
             </div>
           </div>

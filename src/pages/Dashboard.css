@@ -1,44 +1,30 @@
 *{
     font-size: 18px;
 }
-h1{
-    font-size: 36px;
-    padding: 10px 0;
+.dashboard-container {
+  padding: 30px;
 }
-.title{
-    
-    font-size: 30px;
-    margin-bottom: 20px;
-    
-}
-.container{
-    display: flex;
-    flex-direction: row;
-    
-    gap: 20px;
-}
-.questionsLayout{
-    
-    border: 1px solid #ccc;
-    padding: 15px; 
-    border-radius: 8px;
-    flex-basis: 50%;
-    background: #fafafa;   
-    padding-left: 30px;
-}
-.testtitle{
-    font-size: 28px;
-    margin-bottom: 10px;    
-}    
-/* button{
-    margin-top: 10px;   
-    padding: 12px 15px;
-    font-size: 24px;
-    background-color: #9e0cbb;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 7px;
-    margin: 10px;
 
-} */
+.dashboard-title {
+  margin-bottom: 20px;
+}
+
+.test-list {
+  display: grid;
+  gap: 20px;
+}
+
+.test-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background: #fff;
+}
+
+.test-card h3 {
+  margin-bottom: 10px;
+}
+
+.test-card p {
+  margin: 5px 0;
+}

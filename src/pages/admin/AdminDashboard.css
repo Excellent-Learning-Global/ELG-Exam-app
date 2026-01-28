@@ -30,16 +30,18 @@
 .test-list {
   margin-top: 30px;
 }
-
 .test-card {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 15px;
+  transition: all 0.3s ease;
 }
 
-.test-actions {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
+.test-card.removed {
+  opacity: 0;
+  transform: scale(0.95);
+  height: 0;
+  margin: 0;
+  padding: 0;
 }
