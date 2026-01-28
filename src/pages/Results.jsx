@@ -1,28 +1,41 @@
-import React from 'react'
-import './Results.css';
-import { useNavigate } from "react-router-dom";
-import Button from '../components/Button.jsx';
-
-const mockResult = {
-  testTitle: "Weekly Mathematics Test",
-  score: 10,
-  total: 20,
-  percentage: "50%",
-  status: "Passed"
-};
+import React from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Button from "../components/Button";
+import "./Results.css";
 
 function Results() {
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  return (
-    <div >
-      <h2 className='testheader'>Test Result</h2>
+  const score = location.state?.score;
+  const total = location.state?.total || 3; // mock total questions
 
-      <div className='resultcard' >
-        <h3>{mockResult.testTitle}</h3>
-        <p>Score: {mockResult.score} / {mockResult.total}</p>
-        <p>Percentage: {mockResult.percentage}</p>
-        <p>Status: {mockResult.status}</p>
+  if (score === undefined) {
+    return <p>No results available for this test.</p>;
+  }
+
+  const percentage = Math.round((score / total) * 100);
+  const passed = percentage >= 50;
+
+  return (
+    <div className="results-container">
+      <h2>Test Results</h2>
+
+      <div className="score-card">
+        <h3>{passed ? "🎉 Passed" : "❌ Failed"}</h3>
+        <p className="score-text">
+          {score} / {total}
+        </p>
+
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{ width: `${percentage}%` }}
+          ></div>
+        </div>
+
+        <p className="percentage">{percentage}%</p>
       </div>
 
       <Button onClick={() => navigate("/dashboard")}>

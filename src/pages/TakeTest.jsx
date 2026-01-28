@@ -78,7 +78,13 @@ function TakeTest({ tests }) {
     localStorage.removeItem(`test-${id}-answers`);
 
     alert(auto ? "Time's up! Test submitted automatically." : "Test submitted!");
-    navigate(`/results/${id}`, { state: { score } });
+    navigate(`/results/${id}`, {
+      state: {
+        score,
+        total: mockQuestions.length
+      }
+    });
+
   };
 
   // Timer display
