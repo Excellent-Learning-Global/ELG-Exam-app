@@ -1,0 +1,37 @@
+.results-container {
+  max-width: 500px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.score-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.score-text {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #eee;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #3B0A72; 
+}
+
+.percentage {
+  font-weight: bold;
+}
