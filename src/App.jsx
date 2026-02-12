@@ -3,11 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { mockTests } from "./data/Test.js";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import AdminLogin from "./pages/AdminLogin";
 import Dashboard from "./pages/Dashboard";
 import TakeTest from "./pages/TakeTest";
 import Results from "./pages/Results";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateTest from "./pages/admin/CreateTest";
+import AdminResults from "./pages/admin/AdminResult.jsx";
 
 function App() {
   const [tests, setTests] = useState(mockTests);
@@ -22,6 +25,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
 
         
         <Route path="/dashboard" element={<Dashboard tests={tests} />} />
@@ -36,6 +42,10 @@ function App() {
         <Route
           path="/admin/create-test"
           element={<CreateTest addTest={addTest} editTest={editTest} />}
+        />
+        <Route
+          path="/admin/results"
+          element={<AdminResults />}
         />
       </Routes>
     </BrowserRouter>
