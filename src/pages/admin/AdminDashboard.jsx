@@ -1,10 +1,19 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import './AdminDashboard.css';
 import Button from '../../components/Button.jsx';
 
 function AdminDashboard({ tests , deleteTest}) {
   const navigate = useNavigate();
+  useEffect(() => {
+  const isAdmin = localStorage.getItem("admin");
+    if (!isAdmin) {
+      navigate("/admin-login");
+    }
+  }, []);
+
+
   const handleDelete = (id, title) => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete "${title}"?`
@@ -51,7 +60,10 @@ function AdminDashboard({ tests , deleteTest}) {
         <Button onClick={() => navigate('/admin/create-test')}>
           Create New Test
         </Button>
-        <Button type='secondary'>View Results</Button>
+        <Button type="secondary" onClick={() => navigate("/admin/results")}>
+          View Results
+        </Button>
+
         <Button>Manage Students</Button>
       </div>
 
