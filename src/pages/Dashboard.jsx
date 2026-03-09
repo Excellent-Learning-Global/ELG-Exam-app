@@ -3,12 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import './Dashboard.css';
 import Button from '../components/Button.jsx';
+import {  useState } from "react";
 
 
 
 
-function Dashboard({ tests }) {
+function Dashboard() {
   const navigate = useNavigate();
+  const [tests, setTests] = useState([]);
+
+  useEffect(() => {
+    const storedTests = JSON.parse(localStorage.getItem("tests")) || [];
+    setTests(storedTests);
+  }, []);
   // console.log("Student dashboard tests:", tests);
   useEffect(() => {
   const user = localStorage.getItem("currentUser");

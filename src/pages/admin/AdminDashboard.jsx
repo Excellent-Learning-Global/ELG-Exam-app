@@ -1,11 +1,19 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useState } from "react";
 import './AdminDashboard.css';
 import Button from '../../components/Button.jsx';
+import AddQuestions from './Add-questions.jsx';
 
-function AdminDashboard({ tests , deleteTest}) {
+function AdminDashboard({ deleteTest}) {
   const navigate = useNavigate();
+  const [tests, setTests] = useState([]);
+
+  useEffect(() => {
+    const storedTests = JSON.parse(localStorage.getItem("tests")) || [];
+    setTests(storedTests);
+  }, []);
   useEffect(() => {
   const isAdmin = localStorage.getItem("admin");
     if (!isAdmin) {
@@ -73,11 +81,14 @@ function AdminDashboard({ tests , deleteTest}) {
         {tests.map(test => (
           <div key={test.id} className="test-card">
             <h4>{test.title}</h4>
-            <p>Duration: {test.duration}</p>
-            <p>Total Questions: {test.totalQuestions}</p>
+            <p>Duration: {test.duration} Minutes</p>
+            <p>Total Questions: {test.totalQuestions?.length || 0}</p>
             <p>Status: {test.status}</p>
 
             <div className='test-actions'>
+              <Button type='primary' onClick={() => navigate(`/admin/add-questions/${test.id}`)}>
+                Add Questions
+              </Button>
               <Button type='secondary' onClick={() => navigate('/admin/create-test', { state: { test } })}>
                 Edit
               </Button>
