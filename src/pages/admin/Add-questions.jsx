@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import "./AddQuestions.css";
+import "./Add-question.css";
 
 function AddQuestions() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [test, setTest] = useState(null);
-
+  const [addedQuestions, setAddedQuestions] = useState([]);
   const [questionText, setQuestionText] = useState("");
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
@@ -52,8 +52,11 @@ function AddQuestions() {
     });
 
     localStorage.setItem("tests", JSON.stringify(updatedTests));
+    
+    
 
     alert("Question Added Successfully!");
+    
 
     // Reset form
     setQuestionText("");
@@ -93,8 +96,11 @@ function AddQuestions() {
       <button onClick={handleAddQuestion}>Add Question</button>
 
       <button
-        style={{ marginTop: "15px" }}
-        onClick={() => navigate("/admin")}
+        
+        onClick={() => 
+          handleAddQuestion &&
+          navigate("/admin")
+        }
       >
         Done
       </button>
