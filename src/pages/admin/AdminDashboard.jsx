@@ -1,11 +1,19 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useState } from "react";
 import './AdminDashboard.css';
 import Button from '../../components/Button.jsx';
+import AddQuestions from './Add-questions.jsx';
 
-function AdminDashboard({ tests , deleteTest}) {
+function AdminDashboard({ deleteTest}) {
   const navigate = useNavigate();
+  const [tests, setTests] = useState([]);
+
+  useEffect(() => {
+    const storedTests = JSON.parse(localStorage.getItem("tests")) || [];
+    setTests(storedTests);
+  }, []);
   useEffect(() => {
   const isAdmin = localStorage.getItem("admin");
     if (!isAdmin) {
@@ -14,16 +22,22 @@ function AdminDashboard({ tests , deleteTest}) {
   }, []);
 
 
-  const handleDelete = (id, title) => {
+  const handleDelete = (id) => {
+    const tests = JSON.parse(localStorage.getItem("tests")) || [];
+
+    const testToDelete = tests.find((test) => test.id === id);
     const confirmDelete = window.confirm(
-      `Are you sure you want to delete "${title}"?`
+      `Are you sure you want to delete "${testToDelete.title}"?`
     );
+    if (!confirmDelete) return;
 
-    if (confirmDelete) {
-      deleteTest(id);
-    }
+    const updatedTests = tests.filter((test) => test.id !== id);
+
+    localStorage.setItem("tests", JSON.stringify(updatedTests));
+
+    setTests(updatedTests);
+    alert(`"${testToDelete.title}" has been deleted.`);
   };
-
 
   const stats = {
     totalStudents: 200,
@@ -70,29 +84,35 @@ function AdminDashboard({ tests , deleteTest}) {
       {/* Test List */}
       <div className='test-list'>
         <h3>All Tests</h3>
-        {tests.map(test => (
-          <div key={test.id} className="test-card">
-            <h4>{test.title}</h4>
-            <p>Duration: {test.duration}</p>
-            <p>Total Questions: {test.totalQuestions}</p>
-            <p>Status: {test.status}</p>
+        {tests.length === 0 ? (
+          <p>No tests available</p>
+        ) : (
+          tests.map((test) => (
+            <div key={test.id} className="test-card">
+              <h3>{test.title}</h3>
+              <p>Duration: {test.duration} minutes</p>
+              <p>Questions: {test.questions?.length || 0}</p>
 
-            <div className='test-actions'>
-              <Button type='secondary' onClick={() => navigate('/admin/create-test', { state: { test } })}>
-                Edit
-              </Button>
+              <div className='test-actions'>
+                <Button type='primary' onClick={() => navigate(`/admin/add-questions/${test.id}`)}>
+                  Add Questions
+                </Button>
+                <Button type='secondary' onClick={() => navigate('/admin/create-test', { state: { test } })}>
+                  Edit
+                </Button>
 
-              <Button
-                type="danger"
-                onClick={() => handleDelete(test.id, test.title)}
-              >
-                Delete
-              </Button>
+                <Button
+                  type="danger"
+                  onClick={() => handleDelete(test.id)}
+                >
+                  Delete
+                </Button>
 
 
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

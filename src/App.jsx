@@ -11,6 +11,7 @@ import Results from "./pages/Results";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateTest from "./pages/admin/CreateTest";
 import AdminResults from "./pages/admin/AdminResult.jsx";
+import AddQuestions from "./pages/admin/Add-questions.jsx";
 
 function App() {
   const [tests, setTests] = useState(mockTests);
@@ -30,7 +31,7 @@ function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
 
         
-        <Route path="/dashboard" element={<Dashboard tests={tests} />} />
+        <Route path="/dashboard" element={<Dashboard  />} />
         <Route path="/test/:id" element={<TakeTest tests={tests} />} />
         <Route path="/results/:id" element={<Results tests={tests} />} />
 
@@ -47,6 +48,7 @@ function App() {
           path="/admin/results"
           element={<AdminResults />}
         />
+        <Route path="/admin/add-questions/:id" element={<AddQuestions />} />
       </Routes>
     </BrowserRouter>
   );
