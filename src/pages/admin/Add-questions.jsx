@@ -5,7 +5,7 @@ import "./Add-question.css";
 function AddQuestions() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  
   const [test, setTest] = useState(null);
   const [addedQuestions, setAddedQuestions] = useState([]);
   const [questionText, setQuestionText] = useState("");
@@ -13,11 +13,13 @@ function AddQuestions() {
   const [correctAnswer, setCorrectAnswer] = useState(null);
 
   // Load the test
-  useEffect(() => {
-    const tests = JSON.parse(localStorage.getItem("tests")) || [];
-    const foundTest = tests.find((t) => t.id === Number(id));
-    setTest(foundTest);
-  }, [id]);
+useEffect(() => {
+  const tests = JSON.parse(localStorage.getItem("tests")) || [];
+  const foundTest = tests.find((t) => t.id === Number(id));
+
+  setTest(foundTest);
+  setAddedQuestions(foundTest?.questions || []);
+}, [id]);
 
   if (!test) return <h2>Loading...</h2>;
 
@@ -43,9 +45,17 @@ function AddQuestions() {
 
     const updatedTests = tests.map((t) => {
       if (t.id === Number(id)) {
+
+        const updatedQuestions = t.questions
+          ? [...t.questions, newQuestion]
+          : [newQuestion];
+
+        
+        setAddedQuestions(updatedQuestions);
+
         return {
           ...t,
-          questions: t.questions ? [...t.questions, newQuestion] : [newQuestion]
+          questions: updatedQuestions
         };
       }
       return t;
@@ -55,7 +65,7 @@ function AddQuestions() {
     
     
 
-    alert("Question Added Successfully!");
+    // alert("Question Added Successfully!");
     
 
     // Reset form
@@ -65,46 +75,74 @@ function AddQuestions() {
   };
 
   return (
-    <div className="add-questions-container">
-      <h2>Add Questions to: {test.title}</h2>
+    <>
+      <div className="add-questions-container">
+        <h2>Add Questions to: {test.title}</h2>
 
-      <textarea
-        placeholder="Enter Question"
-        value={questionText}
-        onChange={(e) => setQuestionText(e.target.value)}
-      />
+        <textarea
+          placeholder="Enter Question"
+          value={questionText}
+          onChange={(e) => setQuestionText(e.target.value)}
+        />
 
-      {options.map((option, index) => (
-        <div key={index} className="option-group">
-          <input
-            type="text"
-            placeholder={`Option ${index + 1}`}
-            value={option}
-            onChange={(e) => handleOptionChange(e.target.value, index)}
-          />
+        {options.map((option, index) => (
+          <div key={index} className="option-group">
+            <input
+              type="text"
+              placeholder={`Option ${index + 1}`}
+              value={option}
+              onChange={(e) => handleOptionChange(e.target.value, index)}
+            />
 
-          <input
-            type="radio"
-            name="correctAnswer"
-            checked={correctAnswer === index}
-            onChange={() => setCorrectAnswer(index)}
-          />
-          <span>Correct</span>
-        </div>
-      ))}
+            <input
+              type="radio"
+              name="correctAnswer"
+              checked={correctAnswer === index}
+              onChange={() => setCorrectAnswer(index)}
+            />
+            <span>Correct</span>
+          </div>
+        ))}
 
-      <button onClick={handleAddQuestion}>Add Question</button>
+        <button onClick={handleAddQuestion}>Add Question</button>
 
-      <button
-        
-        onClick={() => 
-          handleAddQuestion &&
-          navigate("/admin")
-        }
-      >
-        Done
-      </button>
-    </div>
+        <button
+          
+          onClick={() => 
+            handleAddQuestion &&
+            navigate("/admin")
+          }
+        >
+          Done
+        </button>
+      </div>
+      <div className="preview-questions">
+        <hr style={{ margin: "30px 0" }} />
+
+        <h3>Added Questions</h3>
+
+        {addedQuestions.length === 0 ? (
+          <p>No questions added yet.</p>
+        ) : (
+          addedQuestions.map((q, index) => (
+            <div key={index} className="question-preview">
+              <p>
+                <strong>Q{index + 1}:</strong> {q.question}
+              </p>
+
+              <ul>
+                {q.options.map((opt, i) => (
+                  <li key={i}>
+                    {opt} {q.correctAnswer === i && "✔"}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        )}
+      </div>
+    </>
+
   );
 }
 

@@ -1,4 +1,4 @@
-.add-questions-container {
+.add-questions-container,.preview-questions {
   max-width: 700px;
   margin: 40px auto;
   padding: 30px;
@@ -54,4 +54,14 @@
 
 .add-questions-container button:hover {
   background: #2E0859;
+}
+.question-preview {
+  background: #f8f8ff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.question-preview ul {
+  padding-left: 20px;
 }
