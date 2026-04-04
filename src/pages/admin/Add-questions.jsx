@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Add-question.css";
+import Button from "../../components/Button.jsx";
 
 function AddQuestions() {
   const { id } = useParams();
@@ -11,6 +12,7 @@ function AddQuestions() {
   const [questionText, setQuestionText] = useState("");
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [editingIndex, setEditingIndex] = useState(null);
 
   // Load the test
 useEffect(() => {
@@ -29,50 +31,80 @@ useEffect(() => {
     setOptions(updatedOptions);
   };
 
-  const handleAddQuestion = () => {
-    if (!questionText || options.includes("") || correctAnswer === null) {
-      alert("All fields are required!");
-      return;
-    }
 
-    const newQuestion = {
-      question: questionText,
-      options: options,
-      correctAnswer: correctAnswer
-    };
 
-    const tests = JSON.parse(localStorage.getItem("tests")) || [];
+const handleAddQuestion = () => {
+  if (!questionText || options.includes("") || correctAnswer === null) {
+    alert("All fields are required!");
+    return;
+  }
 
-    const updatedTests = tests.map((t) => {
+  const newQuestion = {
+    question: questionText,
+    options,
+    correctAnswer
+  };
+
+  const tests = JSON.parse(localStorage.getItem("tests")) || [];
+
+  const updatedTests = tests.map((t) => {
       if (t.id === Number(id)) {
+          let updatedQuestions = t.questions || [];
 
-        const updatedQuestions = t.questions
-          ? [...t.questions, newQuestion]
-          : [newQuestion];
+          if (editingIndex !== null) {
+            // Edit existing question
+            updatedQuestions = updatedQuestions.map((q, i) =>
+              i === editingIndex ? newQuestion : q
+            );
+          } else {
+            // add
+            updatedQuestions = [...updatedQuestions, newQuestion];
+          }
 
-        
-        setAddedQuestions(updatedQuestions);
+          setAddedQuestions(updatedQuestions);
 
-        return {
-          ...t,
-          questions: updatedQuestions
-        };
+          return {
+            ...t,
+            questions: updatedQuestions
+          };
       }
-      return t;
+        return t;
     });
 
-    localStorage.setItem("tests", JSON.stringify(updatedTests));
-    
-    
+      localStorage.setItem("tests", JSON.stringify(updatedTests));
 
-    // alert("Question Added Successfully!");
-    
-
-    // Reset form
-    setQuestionText("");
-    setOptions(["", "", "", ""]);
-    setCorrectAnswer(null);
+      // Reset form
+      setQuestionText("");
+      setOptions(["", "", "", ""]);
+      setCorrectAnswer(null);
+      setEditingIndex(null);
   };
+
+
+const handleDeleteQuestion = (index) => {
+  const tests = JSON.parse(localStorage.getItem("tests")) || [];
+
+  const updatedTests = tests.map((t) => {
+    if (t.id === Number(id)) {
+      const updatedQuestions = t.questions.filter((_, i) => i !== index);
+      setAddedQuestions(updatedQuestions);
+
+      return {
+        ...t,
+        questions: updatedQuestions
+      };
+    }
+    return t;
+  });
+
+  localStorage.setItem("tests", JSON.stringify(updatedTests));
+};
+const handleEditQuestion = (question, index) => {
+  setQuestionText(question.question);
+  setOptions(question.options);
+  setCorrectAnswer(question.correctAnswer);
+  setEditingIndex(index);
+};
 
   return (
     <>
@@ -137,9 +169,32 @@ useEffect(() => {
                   </li>
                 ))}
               </ul>
+
+              <div style={{ marginTop: "10px" }}>
+                <button onClick={() => handleEditQuestion(q, index)}>
+                  Edit
+                </button>
+
+                <button
+                  style={{ background: "#dc2626", marginLeft: "10px" }}
+                  onClick={() => handleDeleteQuestion(index)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))
+
         )}
+        <button 
+          
+          onClick={() => 
+            handleAddQuestion &&
+            navigate("/admin")
+          }
+        >
+          Done
+        </button>
       </div>
     </>
 
