@@ -8,14 +8,14 @@ function TakeTest({ tests }) {
   const navigate = useNavigate();
 
   // Find the test by ID
-  const test = tests.find(t => t.id === parseInt(id));
+  const [test, setTest] = useState(null);
+  useEffect(() => {
+    const tests = JSON.parse(localStorage.getItem("tests")) || [];
+    const foundTest = tests.find(t => t.id === Number(id));
+    setTest(foundTest);
+  }, [id]);
 
-  // Mock questions (replace with backend  )
-  const mockQuestions = [
-    { id: 1, question: "What is 2 + 2?", options: ["1", "2", "3", "4"], answer: "4" },
-    { id: 2, question: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Jupiter", "Venus"], answer: "Mars" },
-    { id: 3, question: "What is the capital of France?", options: ["Paris", "London", "Berlin", "Rome"], answer: "Paris" }
-  ];
+  const questions = test?.questions || [];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState(() => {
@@ -43,19 +43,23 @@ function TakeTest({ tests }) {
     localStorage.setItem(`test-${id}-answers`, JSON.stringify(selectedAnswers));
   }, [selectedAnswers, id]);
 
-  if (!test) return <p>Test not found</p>;
+  if (!test) return <p>Loading...</p>;
 
-  const currentQuestion = mockQuestions[currentQuestionIndex];
+  if (!test.questions || test.questions.length === 0) {
+    return <p>No questions added to this test yet.</p>;
+  }
 
-  const handleOptionSelect = (option) => {
+  const currentQuestion = questions[currentQuestionIndex];
+
+  const handleOptionSelect = (index) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion.id]: option
+      [currentQuestion.id]: index
     });
   };
 
   const handleNext = () => {
-    if (currentQuestionIndex < mockQuestions.length - 1) setCurrentQuestionIndex(prev => prev + 1);
+    if (currentQuestionIndex < questions.length - 1) setCurrentQuestionIndex(prev => prev + 1);
   };
 
   const handlePrevious = () => {
@@ -65,8 +69,8 @@ function TakeTest({ tests }) {
   const handleSubmit = (auto = false) => {
     console.log(auto ? "Auto-submitted answers:" : "Submitted answers:", selectedAnswers);
       let score = 0;
-      mockQuestions.forEach(q => {
-        if (selectedAnswers[q.id] === q.answer) {
+      questions.forEach(q => {
+        if (selectedAnswers[q.id] === q.correctAnswer) {
           score += 1;
         }
     });
@@ -81,7 +85,7 @@ function TakeTest({ tests }) {
     navigate(`/results/${id}`, {
       state: {
         score,
-        total: mockQuestions.length
+        total: questions.length
       }
     });
 
@@ -100,14 +104,14 @@ function TakeTest({ tests }) {
       <div className="question-card">
         <h3>Q{currentQuestionIndex + 1}. {currentQuestion.question}</h3>
         <div className="options">
-          {currentQuestion.options.map(option => (
+          {currentQuestion.options.map( index => (
             <Button
-              key={option}
-              type={selectedAnswers[currentQuestion.id] === option ? "primary" : "secondary"}
-              onClick={() => handleOptionSelect(option)}
+              key={index}
+              type={selectedAnswers[currentQuestion.id] === index ? "primary" : "secondary"}
+              onClick={() => handleOptionSelect(index)}
               disabled={timeLeft <= 0} // prevent changing after auto-submit
             >
-              {option}
+              {index}
             </Button>
           ))}
         </div>
@@ -115,7 +119,7 @@ function TakeTest({ tests }) {
 
       <div className="navigation-buttons">
         {currentQuestionIndex > 0 && <Button onClick={handlePrevious} disabled={timeLeft <= 0}>Previous</Button>}
-        {currentQuestionIndex < mockQuestions.length - 1 ? (
+        {currentQuestionIndex < questions.length - 1 ? (
           <Button onClick={handleNext} disabled={timeLeft <= 0}>Next</Button>
         ) : (
           <Button onClick={() => handleSubmit()} disabled={timeLeft <= 0}>Submit Test</Button>

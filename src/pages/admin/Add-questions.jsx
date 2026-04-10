@@ -40,6 +40,7 @@ const handleAddQuestion = () => {
   }
 
   const newQuestion = {
+    id: Date.now(),
     question: questionText,
     options,
     correctAnswer
