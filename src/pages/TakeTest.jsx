@@ -67,13 +67,26 @@ function TakeTest({ tests }) {
   };
 
   const handleSubmit = (auto = false) => {
-    console.log(auto ? "Auto-submitted answers:" : "Submitted answers:", selectedAnswers);
-      let score = 0;
-      questions.forEach(q => {
-        if (selectedAnswers[q.id] === q.correctAnswer) {
-          score += 1;
-        }
+    // console.log(auto ? "Auto-submitted answers:" : "Submitted answers:", selectedAnswers);
+    // console.log("Questions:", questions);
+    // console.log("Selected Answers:", selectedAnswers);
+    // console.log("Current Question ID:", currentQuestion.id);
+    let score = 0;
+
+    questions.forEach((q) => {
+      const selected = selectedAnswers[q.id];
+
+      if (selected === q.correctAnswer) {
+        score++;
+      }
     });
+    const updatedTests = tests.map((t) => {
+      if (t.id === Number(id)) {
+        return { ...t, status: "Completed" };
+      }
+      return t;
+    });
+    localStorage.setItem("tests", JSON.stringify(updatedTests));
 
   // Save in localStorage or navigate with state
     localStorage.setItem(`test-${id}-score`, score);
@@ -98,20 +111,20 @@ function TakeTest({ tests }) {
   return (
     <div className="take-test-container">
       <h2>{test.title}</h2>
-      <p>Duration: {test.duration}</p>
+      <p>Duration: {test.duration} minutes</p>
       <p>Time Left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</p>
 
       <div className="question-card">
         <h3>Q{currentQuestionIndex + 1}. {currentQuestion.question}</h3>
         <div className="options">
-          {currentQuestion.options.map( index => (
+          {currentQuestion.options.map((option, index )=> (
             <Button
-              key={index}
+              key={option}
               type={selectedAnswers[currentQuestion.id] === index ? "primary" : "secondary"}
               onClick={() => handleOptionSelect(index)}
               disabled={timeLeft <= 0} // prevent changing after auto-submit
             >
-              {index}
+              {option}
             </Button>
           ))}
         </div>

@@ -40,10 +40,10 @@ const handleAddQuestion = () => {
   }
 
   const newQuestion = {
-    id: Date.now(),
+    id: Date.now()+ Math.random(), // unique ID for each question 
     question: questionText,
-    options,
-    correctAnswer
+    options :options,
+    correctAnswer: correctAnswer
   };
 
   const tests = JSON.parse(localStorage.getItem("tests")) || [];
