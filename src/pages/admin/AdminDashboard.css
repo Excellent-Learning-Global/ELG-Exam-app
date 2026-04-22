@@ -11,6 +11,7 @@
   gap: 15px;
   margin-top: 20px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 .cardStyle {
   border: 1px solid #ddd;
@@ -24,6 +25,7 @@
   display: flex;
   gap: 12px;
   margin-top: 25px;
+  flex-wrap: wrap;
 }
 
 

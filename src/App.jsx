@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { mockTests } from "./data/Test.js";
+import Landing from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AdminLogin from "./pages/AdminLogin";
@@ -14,18 +15,31 @@ import AdminResults from "./pages/admin/AdminResult.jsx";
 import AddQuestions from "./pages/admin/Add-questions.jsx";
 
 function App() {
-  const [tests, setTests] = useState(mockTests);
-
-  const addTest = (newTest) => setTests(prev => [...prev, newTest]);
-  const deleteTest = (id) => setTests(prev => prev.filter(t => t.id !== id));
-  const editTest = (updatedTest) => setTests(prev =>
-    prev.map(t => t.id === updatedTest.id ? updatedTest : t)
-  );
-
+  const [tests, setTests] = useState(() => {
+    const stored = localStorage.getItem("tests");
+    return stored ? JSON.parse(stored) : [];
+  });
+  const addTest = (newTest) => {
+    const updated = [...tests, newTest];
+    setTests(updated);
+    localStorage.setItem("tests", JSON.stringify(updated));
+  };
+  const deleteTest = (id) => {
+    const updated = tests.filter(t => t.id !== id);
+    setTests(updated);
+    localStorage.setItem("tests", JSON.stringify(updated));
+  };
+  const editTest = (updatedTest) => {
+    const updated = tests.map(t =>
+      t.id === updatedTest.id ? updatedTest : t
+    );
+    setTests(updated);
+    localStorage.setItem("tests", JSON.stringify(updated));
+  };
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/admin-login" element={<AdminLogin />} />

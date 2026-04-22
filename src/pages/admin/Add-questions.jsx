@@ -57,6 +57,7 @@ const handleAddQuestion = () => {
             updatedQuestions = updatedQuestions.map((q, i) =>
               i === editingIndex ? newQuestion : q
             );
+
           } else {
             // add
             updatedQuestions = [...updatedQuestions, newQuestion];
@@ -66,14 +67,16 @@ const handleAddQuestion = () => {
 
           return {
             ...t,
-            questions: updatedQuestions
+            questions: updatedQuestions,
+            status :'Not Started'
           };
       }
         return t;
     });
 
       localStorage.setItem("tests", JSON.stringify(updatedTests));
-
+      localStorage.removeItem(`test-${id}-score`);
+      alert("Question added. Test has been reset for students.");
       // Reset form
       setQuestionText("");
       setOptions(["", "", "", ""]);
@@ -92,13 +95,15 @@ const handleDeleteQuestion = (index) => {
 
       return {
         ...t,
-        questions: updatedQuestions
+        questions: updatedQuestions,
+        
       };
     }
     return t;
   });
 
   localStorage.setItem("tests", JSON.stringify(updatedTests));
+  
 };
 const handleEditQuestion = (question, index) => {
   setQuestionText(question.question);

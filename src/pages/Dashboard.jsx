@@ -41,7 +41,7 @@ function Dashboard() {
             <p>Status: {test.status}</p>
 
             {test.status === "Completed" ? (
-              <Button type="secondary">
+              <Button onClick={() => navigate(`/results/${test.id}`)} type="secondary">
                 View Result
               </Button>
             ) : (

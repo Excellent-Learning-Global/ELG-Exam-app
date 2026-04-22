@@ -80,6 +80,7 @@ function TakeTest({ tests }) {
         score++;
       }
     });
+    const tests = JSON.parse(localStorage.getItem("tests")) || [];
     const updatedTests = tests.map((t) => {
       if (t.id === Number(id)) {
         return { ...t, status: "Completed" };
