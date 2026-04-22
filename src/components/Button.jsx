@@ -29,7 +29,7 @@ function Button({
       onClick={onClick}
       disabled={disabled}
       style={{
-        padding: "10px 18px",
+        padding: "12px 18px",
         borderRadius: "8px",
         border: "none",
         fontSize: "14px",

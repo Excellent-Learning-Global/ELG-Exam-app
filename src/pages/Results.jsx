@@ -8,15 +8,23 @@ function Results() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const score = location.state?.score;
-  const total = location.state?.total || 3; // mock total questions
+  let score = location.state?.score;
+  let total = location.state?.total ; 
 
+
+  // if (score === undefined) {
+  //   return <p>No results available for this test.</p>;
+  // }
   if (score === undefined) {
-    return <p>No results available for this test.</p>;
-  }
+    score = Number(localStorage.getItem(`test-${id}-score`)) || 0;
 
-  const percentage = Math.round((score / total) * 100);
-  const passed = percentage >= 50;
+    const tests = JSON.parse(localStorage.getItem("tests")) || [];
+    const test = tests.find(t => t.id === Number(id));
+    total = test?.questions?.length || 0; 
+
+  }
+    const percentage = Math.round((score / total) * 100);
+    const passed = percentage >= 50;
 
   return (
     <div className="results-container">
