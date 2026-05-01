@@ -55,6 +55,8 @@ export default function Signup() {
 
     users.push(formData);
     localStorage.setItem("users", JSON.stringify(users));
+    
+    localStorage.setItem("studentName", name);
 
     alert("Signup successful!");
     navigate("/login");

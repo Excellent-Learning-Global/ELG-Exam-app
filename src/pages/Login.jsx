@@ -10,7 +10,7 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
+   
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
     const user = users.find(
@@ -23,6 +23,7 @@ export default function Login() {
     }
 
     localStorage.setItem("currentUser", JSON.stringify(user));
+    localStorage.setItem("studentName", name);
     navigate("/dashboard");
   };
   return (

@@ -10,6 +10,12 @@ function Results() {
 
   let score = location.state?.score;
   let total = location.state?.total ; 
+  if (score === undefined) {
+    const saved = JSON.parse(localStorage.getItem(`test-${String(id)}-myResult`)) || {};
+
+    score = saved.score || 0;
+    total = saved.total || 0;
+  }
 
 
   // if (score === undefined) {

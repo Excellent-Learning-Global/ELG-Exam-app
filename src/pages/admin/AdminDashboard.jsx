@@ -74,9 +74,7 @@ function AdminDashboard({ deleteTest}) {
         <Button onClick={() => navigate('/admin/create-test')}>
           Create New Test
         </Button>
-        <Button type="secondary" onClick={() => navigate("/admin/results")}>
-          View Results
-        </Button>
+
 
         <Button>Manage Students</Button>
       </div>
@@ -94,6 +92,9 @@ function AdminDashboard({ deleteTest}) {
               <p>Questions: {test.questions?.length || 0}</p>
 
               <div className='test-actions'>
+                <Button type="secondary" onClick={() => navigate(`/admin/results/${test.id}`)}>
+                  View Results
+                </Button>
                 <Button type='primary' onClick={() => navigate(`/admin/add-questions/${test.id}`)}>
                   Add Questions
                 </Button>

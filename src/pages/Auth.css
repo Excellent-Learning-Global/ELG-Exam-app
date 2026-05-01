@@ -9,15 +9,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #2E0859, #3B0A72);
+  background-color: #2E0859;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 
 .auth-card {
   background-color: #ffffff;
-  padding: 35px;
-  width: 380px;
+  padding: 30px;
+  width: 100%;
+  max-width: 300px;
   border-radius: 12px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   display: flex;

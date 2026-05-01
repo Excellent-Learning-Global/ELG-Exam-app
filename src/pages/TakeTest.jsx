@@ -17,17 +17,21 @@ function TakeTest({ tests }) {
 
   const questions = test?.questions || [];
 
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState(() => {
     // Load partial answers from localStorage if any
     const saved = localStorage.getItem(`test-${id}-answers`);
     return saved ? JSON.parse(saved) : {};
   });
-
+  
+  const duration =parseFloat(test?.duration)  ;
+  let timerInterval =duration  * 60;
    
-  const [timeLeft, setTimeLeft] = useState(150);
+  const [timeLeft, setTimeLeft] = useState(timerInterval); // convert minutes to seconds
 
-   
+  console.log(timerInterval);
+ 
   useEffect(() => {
     if (timeLeft <= 0) {
       handleSubmit(true); // auto-submit when timer runs out
@@ -82,7 +86,7 @@ function TakeTest({ tests }) {
     });
     const tests = JSON.parse(localStorage.getItem("tests")) || [];
     const updatedTests = tests.map((t) => {
-      if (t.id === Number(id)) {
+      if (String(t.id) === String(id)){
         return { ...t, status: "Completed" };
       }
       return t;
@@ -90,7 +94,22 @@ function TakeTest({ tests }) {
     localStorage.setItem("tests", JSON.stringify(updatedTests));
 
   // Save in localStorage or navigate with state
-    localStorage.setItem(`test-${id}-score`, score);
+    const result = {
+      studentName: localStorage.getItem("studentName") || "Anonymous",
+      score,
+      total: questions.length,
+      percentage: (score / questions.length) * 100,
+      status: score >= questions.length * 0.5 ? "Passed" : "Failed"
+    };
+
+    const key = `test-${String(id)}-results`;
+
+    const existingResults = JSON.parse(localStorage.getItem(key)) || [];
+
+    existingResults.push(result);
+
+    localStorage.setItem(key, JSON.stringify(existingResults));
+    console.log("TEST ID:", id);
 
     // Clear saved answers for this test
     localStorage.removeItem(`test-${id}-answers`);
@@ -102,6 +121,10 @@ function TakeTest({ tests }) {
         total: questions.length
       }
     });
+    localStorage.setItem(`test-${String(id)}-myResult`, JSON.stringify({
+      score,
+      total: questions.length
+    }));
 
   };
 
