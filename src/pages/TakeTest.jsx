@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import "./TakeTest.css";
 import { useRef } from "react";
+import StudentProfile from "../components/StudentProfile";
 
 
 
@@ -213,86 +214,89 @@ function TakeTest() {
   const seconds = (timeLeft || 0) % 60;
 
   return (
-    <div className="take-test-container">
-      <h2>{test.title}</h2>
+    <>
+      <StudentProfile />
+      <div className="take-test-container">
+        <h2>{test.title}</h2>
 
-      <p>
-        <strong>Duration:</strong> {test.duration} minutes
-      </p>
-
-      <p
-        style={{
-          color: timeLeft <= 60 ? "red" : "inherit",
-          fontWeight: "bold",
-        }}
-      >
-        Time Left: {minutes}:
-        {seconds < 10 ? `0${seconds}` : seconds}
-      </p>
-
-      {/* QUESTION CARD */}
-      <div className="question-card">
-        <h3 className="question-text">
-          Question {currentQuestionIndex + 1} of{" "}
-          {questions.length}
-        </h3>
-
-        <p className="question-text">
-          {currentQuestion.question}
+        <p>
+          <strong>Duration:</strong> {test.duration} minutes
         </p>
 
-        <div className="options">
-          {currentQuestion.options.map(
-            (option, index) => (
-              <Button
-                key={index}
-                type={
-                  selectedAnswers[currentQuestion.id] ===
-                  index
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() =>
-                  handleOptionSelect(index)
-                }
-                disabled={timeLeft <= 0}
-              >
-                {option}
-              </Button>
-            )
+        <p
+          style={{
+            color: timeLeft <= 60 ? "red" : "inherit",
+            fontWeight: "bold",
+          }}
+        >
+          Time Left: {minutes}:
+          {seconds < 10 ? `0${seconds}` : seconds}
+        </p>
+
+        {/* QUESTION CARD */}
+        <div className="question-card">
+          <h3 className="question-text">
+            Question {currentQuestionIndex + 1} of{" "}
+            {questions.length}
+          </h3>
+
+          <p className="question-text">
+            {currentQuestion.question}
+          </p>
+
+          <div className="options">
+            {currentQuestion.options.map(
+              (option, index) => (
+                <Button
+                  key={index}
+                  type={
+                    selectedAnswers[currentQuestion.id] ===
+                    index
+                      ? "primary"
+                      : "secondary"
+                  }
+                  onClick={() =>
+                    handleOptionSelect(index)
+                  }
+                  disabled={timeLeft <= 0}
+                >
+                  {option}
+                </Button>
+              )
+            )}
+          </div>
+        </div>
+
+        {/* NAVIGATION */}
+        <div className="navigation-buttons">
+          {currentQuestionIndex > 0 && (
+            <Button
+              onClick={handlePrevious}
+              disabled={timeLeft <= 0}
+            >
+              Previous
+            </Button>
+          )}
+
+          {currentQuestionIndex <
+          questions.length - 1 ? (
+            <Button
+              onClick={handleNext}
+              disabled={timeLeft <= 0}
+            >
+              Next
+            </Button>
+          ) : (
+            <Button
+              onClick={() => handleSubmit()}
+              disabled={timeLeft <= 0}
+            >
+              Submit Test
+            </Button>
           )}
         </div>
       </div>
-
-      {/* NAVIGATION */}
-      <div className="navigation-buttons">
-        {currentQuestionIndex > 0 && (
-          <Button
-            onClick={handlePrevious}
-            disabled={timeLeft <= 0}
-          >
-            Previous
-          </Button>
-        )}
-
-        {currentQuestionIndex <
-        questions.length - 1 ? (
-          <Button
-            onClick={handleNext}
-            disabled={timeLeft <= 0}
-          >
-            Next
-          </Button>
-        ) : (
-          <Button
-            onClick={() => handleSubmit()}
-            disabled={timeLeft <= 0}
-          >
-            Submit Test
-          </Button>
-        )}
-      </div>
-    </div>
+    </>  
   );
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import "./Results.css";
-
+import StudentProfile from "../components/StudentProfile";
 function Results() {
   const { id } = useParams();
   const location = useLocation();
@@ -38,29 +38,32 @@ function Results() {
   const passed = percentage >= 50;
 
   return (
-    <div className="results-container">
-      <h2>Test Results</h2>
+    <>
+      <StudentProfile />
+      <div className="results-container">
+        <h2>Test Results</h2>
 
-      <div className="score-card">
-        <h3>{passed ? "🎉 Passed" : "❌ Failed"}</h3>
-        <p className="score-text">
-          {score} / {total}
-        </p>
+        <div className="score-card">
+          <h3>{passed ? "🎉 Passed" : "❌ Failed"}</h3>
+          <p className="score-text">
+            {score} / {total}
+          </p>
 
-        <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{ width: `${percentage}%` }}
-          ></div>
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ width: `${percentage}%` }}
+            ></div>
+          </div>
+
+          <p className="percentage">{percentage}%</p>
         </div>
 
-        <p className="percentage">{percentage}%</p>
+        <Button onClick={() => navigate("/dashboard")}>
+          Back to Dashboard
+        </Button>
       </div>
-
-      <Button onClick={() => navigate("/dashboard")}>
-        Back to Dashboard
-      </Button>
-    </div>
+    </>  
   );
 }
 
