@@ -1,0 +1,40 @@
+.take-test-container {
+  padding: 30px;
+  background-color: #F7F6FB;
+  min-height: 100vh;
+}
+
+.question-card {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.question-text {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.options {
+    display: flex;
+    width: 100%;
+    /* max-width: 80%; */
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.options button {
+    width: 55%;
+    padding: 22px !important;
+    font-size: larger !important;
+    
+
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
