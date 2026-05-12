@@ -1,72 +1,57 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
-import "./AdminResult.css";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-function AdminResults() {
-  const navigate = useNavigate();
+function ViewResults() {
+  const { id } = useParams();
+  const [results, setResults] = useState([]);
 
-  // Mock submissions 
-  const submissions = [
-    {
-      id: 1,
-      studentName: "John Doe",
-      score: 8,
-      total: 10
-    },
-    {
-      id: 2,
-      studentName: "Mary Smith",
-      score: 4,
-      total: 10
-    }
-    ,
-    {
-      id: 3,
-      studentName: "Pan Chan",
-      score: 2,
-      total: 10
-    }
-  ];
+  useEffect(() => {
+    const key = `test-${String(id)}-results`;
+    console.log(key);
+    
+    const data = JSON.parse(localStorage.getItem(key)) || [];
+    setResults(data);
+    console.log(data);
+    
+  }, [id]);
+
+  const passed = results.filter(r => r.status === "Passed");
+  const failed = results.filter(r => r.status === "Failed");
 
   return (
-    <div className="admin-results-container">
-      <h2>Test Submissions</h2>
+    <div style={{ padding: "20px" }}>
+      <h2>Test Results</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Student</th>
-            <th>Score</th>
-            <th>Percentage</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <div>
+        <p>Total Students: {results.length}</p>
+        <p>Passed: {passed.length}</p>
+        <p>Failed: {failed.length}</p>
+      </div>
 
-        <tbody>
-          {submissions.map(sub => {
-            const percentage = Math.round((sub.score / sub.total) * 100);
-            const passed = percentage >= 50;
+      <hr />
 
-            return (
-              <tr key={sub.id}>
-                <td>{sub.studentName}</td>
-                <td>{sub.score}/{sub.total}</td>
-                <td>{percentage}%</td>
-                <td className={passed ? "pass" : "fail"}>
-                  {passed ? "Pass" : "Fail"}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
-      <Button onClick={() => navigate("/admin")}>
-        Back to Dashboard
-      </Button>
+      {results.length === 0 ? (
+        <p>No students have taken this test yet.</p>
+      ) : (
+        results.map((r, index) => (
+          <div
+            key={index}
+            style={{
+              padding: "10px",
+              margin: "10px 0",
+              border: "1px solid #ddd",
+              borderLeft: r.status === "Passed" ? "5px solid green" : "5px solid red"
+            }}
+          >
+            <h3>{r.studentName}</h3>
+            <p>Score: {r.score} / {r.total}</p>
+            <p>Percentage: {Number(r.percentage).toFixed(1)}%</p>
+            <strong>{r.status}</strong>
+          </div>
+        ))
+      )}
     </div>
   );
 }
 
-export default AdminResults;
+export default ViewResults;

@@ -59,8 +59,7 @@ function App() {
           element={<CreateTest addTest={addTest} editTest={editTest} />}
         />
         <Route
-          path="/admin/results"
-          element={<AdminResults />}
+          path="/admin/results/:id" element={<AdminResults />}
         />
         <Route path="/admin/add-questions/:id" element={<AddQuestions />} />
       </Routes>

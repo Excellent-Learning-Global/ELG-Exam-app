@@ -8,23 +8,34 @@ function Results() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  let score = location.state?.score;
-  let total = location.state?.total ; 
+  const stateScore = location.state?.score;
+  const stateTotal = location.state?.total;
 
+  let score = typeof stateScore === "number" ? stateScore : undefined;
+  let total = typeof stateTotal === "number" ? stateTotal : undefined;
 
-  // if (score === undefined) {
-  //   return <p>No results available for this test.</p>;
-  // }
-  if (score === undefined) {
-    score = Number(localStorage.getItem(`test-${id}-score`)) || 0;
+  if (score === undefined || total === undefined) {
+    const saved = JSON.parse(localStorage.getItem(`test-${id}-myResult`)) || {};
 
-    const tests = JSON.parse(localStorage.getItem("tests")) || [];
-    const test = tests.find(t => t.id === Number(id));
-    total = test?.questions?.length || 0; 
+    if (score === undefined) {
+      score = typeof saved.score === "number" ? saved.score : Number(localStorage.getItem(`test-${id}-score`)) || 0;
+    }
 
+    if (total === undefined) {
+      total = typeof saved.total === "number" ? saved.total : (() => {
+        const tests = JSON.parse(localStorage.getItem("tests")) || [];
+        const test = tests.find(t => t.id === Number(id));
+        return test?.questions?.length || 0;
+      })();
+    }
   }
-    const percentage = Math.round((score / total) * 100);
-    const passed = percentage >= 50;
+
+  if (total === 0) {
+    return <p>No results available for this test.</p>;
+  }
+
+  const percentage = Math.round((score / total) * 100);
+  const passed = percentage >= 50;
 
   return (
     <div className="results-container">

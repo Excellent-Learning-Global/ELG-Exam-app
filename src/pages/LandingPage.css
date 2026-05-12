@@ -8,15 +8,20 @@ body {
 .landing-container {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #3B0A72, #6C63FF);
+  background-color: #3B0A72;
+  
+  position: relative;
+  
   
 }
 
 
 .landing-card {
   background: white;
+  margin-top: 20px;
   padding: 50px 40px;
   border-radius: 18px;
   width: 100%;

@@ -1,3 +1,31 @@
 :root {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
+
+/* footer style */
+.landing-footer {
+  margin-top: 5px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+}
+
+.footer-links {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: 0.2s ease;
+}
+
+.footer-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
