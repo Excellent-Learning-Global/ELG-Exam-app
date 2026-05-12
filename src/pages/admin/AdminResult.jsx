@@ -45,7 +45,7 @@ function ViewResults() {
           >
             <h3>{r.studentName}</h3>
             <p>Score: {r.score} / {r.total}</p>
-            <p>Percentage: {r.percentage.toFixed(1)}%</p>
+            <p>Percentage: {Number(r.percentage).toFixed(1)}%</p>
             <strong>{r.status}</strong>
           </div>
         ))

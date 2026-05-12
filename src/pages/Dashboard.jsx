@@ -37,7 +37,7 @@ function Dashboard() {
           <div key={test.id} className="test-card">
             <h3>{test.title}</h3>
 
-            <p>Duration: {test.duration}</p>
+            <p>Duration: {test.duration} minutes</p>
             <p>Status: {test.status}</p>
 
             {test.status === "Completed" ? (

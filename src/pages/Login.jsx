@@ -23,7 +23,8 @@ export default function Login() {
     }
 
     localStorage.setItem("currentUser", JSON.stringify(user));
-    localStorage.setItem("studentName", name);
+    localStorage.setItem("studentName", user.name);
+    console.log("Saving name:", user.name);
     navigate("/dashboard");
   };
   return (

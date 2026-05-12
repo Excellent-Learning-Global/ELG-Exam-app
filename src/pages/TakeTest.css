@@ -11,6 +11,10 @@
   border-radius: 10px;
   border: 1px solid #ddd;
 }
+.question-text {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
 
 .options {
     display: flex;
