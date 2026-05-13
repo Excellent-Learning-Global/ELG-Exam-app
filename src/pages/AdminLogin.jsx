@@ -13,7 +13,19 @@ export default function AdminLogin() {
 
     // Simple hardcoded admin for now
     if (email === "admin@school.com" && password === "admin123") {
-      localStorage.setItem("admin", "true");
+      
+      const adminData = {
+        name: "Administrator",
+        email: email,
+        role: "admin",           // Good to add this
+        loggedInAt: new Date().toISOString()
+      };
+
+      localStorage.setItem("admin", JSON.stringify(adminData));
+      
+      // Optional: You can also store a simple auth flag
+      localStorage.setItem("adminAuth", "true");
+
       navigate("/admin");
     } else {
       alert("Invalid admin credentials");

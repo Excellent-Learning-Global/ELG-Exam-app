@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Add-question.css";
 import Button from "../../components/Button.jsx";
+import AdminProfile from "../../components/AdminProfile.jsx";
 
 function AddQuestions() {
   const { id } = useParams();
@@ -114,6 +115,7 @@ const handleEditQuestion = (question, index) => {
 
   return (
     <>
+      <AdminProfile />
       <div className="add-questions-container">
         <h2>Add Questions to: {test.title}</h2>
 

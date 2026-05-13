@@ -1,24 +1,25 @@
-.student-profile-card {
-  width: 600px;
+
+.admin-profile {
+  width: 800px;
   background: #ffffff;
   border-radius: 18px;
-  padding: 18px 22px;
+  padding: 18px 24px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 15px;
+  align-items: center;
+  gap: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
   border: 1px solid rgba(108, 99, 255, 0.12);
-  margin-bottom: 20px;
 }
 
-.profile-left {
+.admin-left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
 }
 
-.student-avatar {
+.admin-avatar {
   width: 55px;
   height: 55px;
   border-radius: 50%;
@@ -29,41 +30,54 @@
   justify-content: center;
   font-size: 22px;
   font-weight: bold;
-  flex-shrink: 0;
 }
 
 .small-avatar {
   width: 42px;
   height: 42px;
-  font-size: 16px;
-}
-
-.student-details {
-  flex: 1;
-}
-
-.student-details h3 {
-  margin: 0;
   font-size: 18px;
+}
+
+.admin-info h3 {
+  margin: 0;
   color: #222;
 }
 
-.student-details p {
+.admin-info p {
   margin-top: 4px;
   color: #666;
   font-size: 14px;
-  word-break: break-word;
 }
 
-.logout-btn, .dashboard-btn {
-  background: #3B0A72;
-  color: white;
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-btn,
+.logout-btn {
   border: none;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
   transition: 0.3s ease;
+}
+
+.dashboard-btn {
+  background: #6C63FF;
+  color: white;
+}
+
+.dashboard-btn:hover {
+  background: #574bdb;
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  background: #3B0A72;
+  color: white;
 }
 
 .logout-btn:hover {
@@ -71,25 +85,24 @@
   transform: translateY(-2px);
 }
 
-/* MOBILE NAVBAR */
-.mobile-navbar {
+/* MOBILE NAV */
+.mobile-admin-navbar {
   display: none;
-  /* width: 100%; */
+ 
   background: white;
   padding: 14px 18px;
   border-radius: 14px;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
 }
 
-.mobile-brand {
+.mobile-admin-left {
   display: flex;
   align-items: center;
   gap: 12px;
   font-weight: 600;
-  color: #222;
 }
 
 .menu-toggle {
@@ -99,54 +112,41 @@
   color: #3B0A72;
 }
 
-.mobile-menu {
-  /* width: 100%; */
+/* MOBILE MENU */
+.mobile-admin-menu {
   background: white;
-  border-radius: 14px;
   padding: 18px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
   margin-top: -10px;
   margin-bottom: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-.mobile-menu p {
+.mobile-admin-menu p {
   color: #666;
   margin-bottom: 15px;
   word-break: break-word;
 }
 
-.mobile-logout  {
+.mobile-btn {
   width: 100%;
-  margin-bottom: 15px;
-  margin-top: 20px;
-}
-.dashboard-btn {
- 
-  margin-bottom: 15px;
-  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 /* TABLET */
 @media (max-width: 900px) {
-  .student-profile-card {
+  .admin-profile {
     padding: 16px;
-  }
-
-  .student-details h3 {
-    font-size: 16px;
   }
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
-  .desktop-profile {
+  .desktop-admin-profile {
     display: none;
   }
 
-  .mobile-navbar {
+  .mobile-admin-navbar {
     display: flex;
-  }
-  .dashboard-btn {
-    width: 100%;
   }
 }

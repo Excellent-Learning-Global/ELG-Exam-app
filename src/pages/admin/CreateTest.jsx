@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./CreateTest.css";
+import AdminProfile from "../../components/AdminProfile.jsx";
 
 function CreateTest() {
   const navigate = useNavigate();
@@ -55,34 +56,37 @@ function CreateTest() {
   };
 
   return (
-    <form className="create-test-form" onSubmit={handleSubmit}>
-      <h2>{editingTest ? "Edit Test" : "Create Test"}</h2>
+    <>
+      <AdminProfile />
+      <form className="create-test-form" onSubmit={handleSubmit}>
+        <h2>{editingTest ? "Edit Test" : "Create Test"}</h2>
 
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Test Title"
-      />
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Test Title"
+        />
 
-      <input
-        type="number"
-        value={duration}
-        onChange={(e) => setDuration(e.target.value)}
-        placeholder="Duration in minutes"
-      />
+        <input
+          type="number"
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+          placeholder="Duration in minutes"
+        />
 
-      <input
-        type="number"
-        value={totalQuestions}
-        onChange={(e) => setTotalQuestions(e.target.value)}
-        placeholder="Total Questions"
-      />
+        <input
+          type="number"
+          value={totalQuestions}
+          onChange={(e) => setTotalQuestions(e.target.value)}
+          placeholder="Total Questions"
+        />
 
-      <button type="submit">
-        {editingTest ? "Update Test" : "Create Test"}
-      </button>
-    </form>
+        <button type="submit">
+          {editingTest ? "Update Test" : "Create Test"}
+        </button>
+      </form>
+    </>
   );
 }
 
