@@ -20,6 +20,9 @@ function StudentProfile() {
 
     navigate("/login");
   };
+    const goToDashboard = () => {
+    navigate("/dashboard");
+  };
 
   return (
     <>
@@ -34,6 +37,14 @@ function StudentProfile() {
             <p>{user?.email || "No Email"}</p>
           </div>
         </div>
+        {location.pathname !== "/dashboard" && (
+            <button
+              className="dashboard-btn"
+              onClick={goToDashboard}
+            >
+              Dashboard
+            </button>
+        )}
 
         <button className="logout-btn" onClick={handleLogout}>
           Logout
@@ -62,6 +73,14 @@ function StudentProfile() {
         <div className="mobile-menu">
           <p>{user?.email || "No Email"}</p>
 
+          {location.pathname !== "/dashboard" && (
+            <button
+              className="dashboard-btn"
+              onClick={goToDashboard}
+            >
+              Dashboard
+            </button>
+          )}
           <button className="logout-btn mobile-logout" onClick={handleLogout}>
             Logout
           </button>
