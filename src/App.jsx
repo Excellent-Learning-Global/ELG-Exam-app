@@ -37,7 +37,7 @@ function App() {
     localStorage.setItem("tests", JSON.stringify(updated));
   };
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/ELG-Exam-app">
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
