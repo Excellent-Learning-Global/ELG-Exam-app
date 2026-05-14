@@ -33,11 +33,11 @@ function StudentProfile() {
           </div>
 
           <div className="student-details">
-            <h3>{user?.name || "Student"}</h3>
+            <h3>Welcome, {user?.name || "Student"}</h3>
             <p>{user?.email || "No Email"}</p>
           </div>
         </div>
-        {location.pathname !== "/dashboard" && (
+        {location.pathname !== "/ELG-Exam-app/dashboard" && (
             <button
               className="dashboard-btn"
               onClick={goToDashboard}
@@ -58,7 +58,7 @@ function StudentProfile() {
             {user?.name?.charAt(0)?.toUpperCase() || "S"}
           </div>
 
-          <span>{user?.name || "Student"}</span>
+          <span>Welcome,<br /> {user?.name || "Student"}</span>
         </div>
 
         <button
@@ -71,9 +71,10 @@ function StudentProfile() {
 
       {menuOpen && (
         <div className="mobile-menu">
-          <p>{user?.email || "No Email"}</p>
+  
+          <p> {user?.email || "No Email"}</p>
 
-          {location.pathname !== "/dashboard" && (
+          {location.pathname !== "/ELG-Exam-app/dashboard" && (
             <button
               className="dashboard-btn"
               onClick={goToDashboard}

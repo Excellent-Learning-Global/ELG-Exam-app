@@ -3,10 +3,13 @@
 }
 .dashboard-container {
   padding: 30px;
+
 }
 
 .dashboard-title {
   margin-bottom: 20px;
+  font-size:  28px;
+  color: #333;
 }
 
 .test-list {

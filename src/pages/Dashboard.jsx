@@ -5,6 +5,7 @@ import './Dashboard.css';
 import Button from '../components/Button.jsx';
 import {  useState } from "react";
 import StudentProfile from '../components/StudentProfile.jsx';
+import Footer from '../components/Footer.jsx';
 
 
 
@@ -56,6 +57,7 @@ function Dashboard() {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
