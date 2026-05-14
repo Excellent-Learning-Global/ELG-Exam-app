@@ -1,13 +1,17 @@
 :root {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+  height: 100vh;
 }
 
 /* footer style */
 .landing-footer {
   margin-top: 5px;
   text-align: center;
+  background-color: #3B0A72;
+  padding: 10px 10px;
   color: rgba(255, 255, 255, 0.85);
   font-size: 13px;
+  bottom: 0;
 }
 
 .footer-links {
@@ -23,6 +27,21 @@
   text-decoration: none;
   opacity: 0.8;
   transition: 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-link-icon {
+  display: inline-flex;
+  width: 1.6em;
+  height: 1.6em;
+}
+
+.footer-link-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
 }
 
 .footer-links a:hover {

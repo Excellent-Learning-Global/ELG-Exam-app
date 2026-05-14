@@ -6,6 +6,7 @@ import './AdminDashboard.css';
 import Button from '../../components/Button.jsx';
 import AddQuestions from './Add-questions.jsx';
 import AdminProfile from '../../components/AdminProfile.jsx';
+import Footer from '../../components/Footer.jsx';
 
 function AdminDashboard({ deleteTest}) {
   const navigate = useNavigate();
@@ -119,6 +120,7 @@ function AdminDashboard({ deleteTest}) {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
